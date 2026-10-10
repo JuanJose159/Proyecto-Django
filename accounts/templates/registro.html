@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro · Gestor de Cursos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
+</head>
+<body class="bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 min-h-screen flex items-center justify-center p-4 md:p-6">
+
+    <main class="w-full max-w-lg bg-white/80 backdrop-blur-lg rounded-2xl shadow-xl border border-white p-6 md:p-8">
+
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl overflow-hidden shadow-lg shadow-purple-400/40 mb-4">
+                <img src="{% static 'img/logo.jpg' %}" alt="Logo" class="w-full h-full object-cover">
+            </div>
+            <h1 class="text-2xl font-bold text-slate-800">Crear cuenta</h1>
+            <p class="text-sm text-slate-500 mt-1">Regístrate para comenzar a aprender</p>
+        </div>
+
+        {% if errors %}
+        <div class="mb-5 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">
+            <ul class="list-disc pl-5 space-y-1">
+                {% for error in errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <form method="post" class="space-y-4">
+            {% csrf_token %}
+
+            <div>
+                <label for="username" class="block text-sm font-semibold text-slate-700 mb-1.5">Usuario</label>
+                <input type="text" name="username" id="username" required placeholder="Ej. juan123"
+                       value="{{ datos.username|default:'' }}"
+                       class="w-full px-4 py-2.5 rounded-lg bg-slate-50 border border-slate-200 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition">
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label for="first_name" class="block text-sm font-semibold text-slate-700 mb-1.5">Nombre</label>
+                    <input type="text" name="first_name" id="first_name" required placeholder="Ej. Juan"
+                           value="{{ datos.first_name|default:'' }}"
+                           class="w-full px-4 py-2.5 rounded-lg bg-slate-50 border border-slate-200 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition">
+                </div>
+                <div>
+                    <label for="last_name" class="block text-sm font-semibold text-slate-700 mb-1.5">Apellido</label>
+                    <input type="text" name="last_name" id="last_name" required placeholder="Ej. Pérez"
+                           value="{{ datos.last_name|default:'' }}"
+                           class="w-full px-4 py-2.5 rounded-lg bg-slate-50 border border-slate-200 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition">
+                </div>
+            </div>
+
+            <div>
+                <label for="email" class="block text-sm font-semibold text-slate-700 mb-1.5">Correo electrónico</label>
+                <input type="email" name="email" id="email" required placeholder="ejemplo@correo.com"
+                       value="{{ datos.email|default:'' }}"
+                       class="w-full px-4 py-2.5 rounded-lg bg-slate-50 border border-slate-200 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition">
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label for="password1" class="block text-sm font-semibold text-slate-700 mb-1.5">Contraseña</label>
+                    <input type="password" name="password1" id="password1" required placeholder="••••••••"
+                           class="w-full px-4 py-2.5 rounded-lg bg-slate-50 border border-slate-200 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition">
+                </div>
+                <div>
+                    <label for="password2" class="block text-sm font-semibold text-slate-700 mb-1.5">Confirmar contraseña</label>
+                    <input type="password" name="password2" id="password2" required placeholder="••••••••"
+                           class="w-full px-4 py-2.5 rounded-lg bg-slate-50 border border-slate-200 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition">
+                </div>
+            </div>
+
+            <button type="submit"
+                    class="w-full inline-flex items-center justify-center gap-2 px-6 py-3 text-sm font-semibold text-white bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 rounded-lg shadow-md transition">
+                Crear cuenta
+            </button>
+        </form>
+
+        <div class="mt-6 pt-5 border-t border-slate-200 text-center text-xs text-slate-500">
+            ¿Ya tienes cuenta?
+            <a href="{% url 'login' %}" class="text-indigo-600 hover:text-indigo-800 font-medium transition">Inicia sesión</a>
+        </div>
+    </main>
+
+</body>
+</html>

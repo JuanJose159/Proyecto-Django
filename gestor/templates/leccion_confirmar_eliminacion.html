@@ -1,0 +1,20 @@
+{% extends 'layouts/base.html' %}
+{% block title %}Eliminar lección{% endblock %}
+{% block content %}
+<div class="max-w-md mx-auto text-center py-6">
+    <span class="text-5xl block mb-3">🗑️</span>
+    <h1 class="text-2xl font-bold text-slate-800">¿Eliminar esta lección?</h1>
+    <p class="text-slate-600 mt-3">
+        Se borrará permanentemente <strong>{{ leccion.titulo }}</strong> del curso <strong>{{ curso.titulo }}</strong>.
+    </p>
+
+    <form method="post" class="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+        {% csrf_token %}
+        <a href="{% url 'detalle_curso' curso.pk %}"
+           class="px-5 py-3 text-sm font-semibold text-slate-600 bg-white border border-slate-200 rounded-xl hover:border-purple-300">Cancelar</a>
+        <button type="submit" class="px-6 py-3 text-sm font-semibold text-white bg-rose-600 hover:bg-rose-700 rounded-xl shadow">
+            Confirmar Eliminación
+        </button>
+    </form>
+</div>
+{% endblock %}

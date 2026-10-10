@@ -1,0 +1,70 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %}Grupos | Gestor de Cursos{% endblock %}
+
+{% block content %}
+<section class="max-w-5xl mx-auto space-y-6">
+    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+        <div>
+            <p class="text-sm font-medium text-indigo-600">Administración</p>
+            <h1 class="text-3xl font-bold tracking-tight text-slate-900">Grupos</h1>
+            <p class="mt-1 text-slate-500">Organiza los usuarios del sistema por equipos.</p>
+        </div>
+    </div>
+
+    <form method="post" class="form-card bg-white border border-slate-200 rounded-xl p-5 shadow-sm">
+        {% csrf_token %}
+        <label for="nombre_grupo" class="block text-sm font-semibold text-slate-700">Nuevo grupo</label>
+        <div class="mt-2 flex flex-col sm:flex-row gap-3">
+            <input id="nombre_grupo" name="nombre_grupo" type="text" required maxlength="150"
+                   placeholder="Nombre del grupo"
+                   class="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm text-slate-800 shadow-sm">
+            <button type="submit"
+                    class="inline-flex items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-700">
+                <i class="fa-solid fa-plus" aria-hidden="true"></i>
+                Agregar grupo
+            </button>
+        </div>
+    </form>
+
+    <div class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+        <div class="border-b border-slate-200 px-5 py-4">
+            <h2 class="font-semibold text-slate-900">Grupos registrados</h2>
+        </div>
+
+        {% if grupos %}
+        <ul class="divide-y divide-slate-100">
+            {% for grupo in grupos %}
+            <li class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 px-5 py-4">
+                <!-- Información del grupo -->
+                <div>
+                    <h3 class="font-medium text-slate-800">{{ grupo.name }}</h3>
+                    <p class="text-sm text-slate-500">{{ grupo.user_set.count }} usuario{{ grupo.user_set.count|pluralize }}</p>
+                </div>
+
+                <!-- Botones de Editar y Eliminar agrupados -->
+                <div class="flex items-center gap-2">
+                    <a href="{% url 'editar_grupo' grupo.id %}"
+                       class="inline-flex items-center justify-center gap-2 rounded-lg border border-amber-200 px-3 py-2 text-sm font-medium text-amber-600 transition hover:bg-amber-50">
+                        <i class="fa-solid fa-pen" aria-hidden="true"></i>
+                        Editar
+                    </a>
+                    <form method="post" action="{% url 'eliminar_grupo' grupo.id %}" class="inline">
+                        {% csrf_token %}
+                        <button type="submit"
+                                onclick="return confirm('¿Seguro que deseas eliminar este grupo?');"
+                                class="inline-flex items-center justify-center gap-2 rounded-lg border border-red-200 px-3 py-2 text-sm font-medium text-red-600 transition hover:bg-red-50">
+                            <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                            Eliminar
+                        </button>
+                    </form>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="px-5 py-8 text-center text-sm text-slate-500">Todavía no hay grupos registrados.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

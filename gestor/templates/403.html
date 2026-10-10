@@ -1,0 +1,15 @@
+{% extends 'layouts/base.html' %}
+{% block title %}Acceso denegado{% endblock %}
+{% block content %}
+<div class="text-center py-10">
+    <span class="text-5xl block mb-3">🔒</span>
+    <h1 class="text-2xl font-bold text-slate-800">No tienes permiso para hacer esto</h1>
+    <p class="text-sm text-slate-500 mt-2">
+        Pídele a un administrador que te agregue a un grupo con el permiso necesario.
+    </p>
+    <a href="{% url 'cursos' %}"
+       class="inline-flex items-center gap-2 mt-6 px-5 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg shadow-md">
+        Volver a los cursos
+    </a>
+</div>
+{% endblock %}
